@@ -174,6 +174,17 @@ function animateSnakeOrLadder(player, targetCell, type, cb) {
   if (type === 'ladder') playSound('ladder');
   if (type === 'snake') playSound('snake');
 
+// 1) Small “hit” animation on current cell (head or ladder base)
+  const hitClass = type === 'snake' ? 'snake-hit' : 'ladder-hit';
+  token.classList.add(hitClass);
+
+  // Wait for CSS hit animation (~450–500ms), then run the diagonal arc
+  const hitDuration = type === 'snake' ? 500 : 450;
+
+  setTimeout(() => {
+    token.classList.remove(hitClass);
+
+
   const jump = setInterval(() => {
     frame++;
     const t = frame / frames;
