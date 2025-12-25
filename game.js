@@ -237,7 +237,7 @@ function animateSteps(player, steps, cb) {
         cb && cb();
       }
     }
-  }, 260);
+  }, 400);
 }
 
 // Unified roll handler with strict exact-win + AI-safe six logic
