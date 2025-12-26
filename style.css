@@ -515,6 +515,7 @@ Control column (right)
 }
 
 
+
 @media (max-width: 900px) {
 
   /* Extra space between title and turn */
@@ -539,36 +540,52 @@ Control column (right)
   }
 }
 
-/* =====================================================
-   MOBILE LANDSCAPE SAFETY PATCH
-   Prevent board hiding behind system UI
-   ===================================================== */
+/* =========================================
+   SAFE VIEWPORT PADDING (NO TOKEN BREAKAGE)
+   ========================================= */
 
-/* Apply only on mobile landscape */
-@media (orientation: landscape) and (max-width: 900px) {
+/* Prevent OS UI overlap (notch / status bar) */
+body {
+  padding:
+    env(safe-area-inset-top)
+    env(safe-area-inset-right)
+    env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+}
 
-  body {
-    /* Respect phone status bars / notches */
-    padding-top: calc(12px + env(safe-area-inset-top));
-    padding-bottom: calc(12px + env(safe-area-inset-bottom));
-    padding-left: calc(12px + env(safe-area-inset-left));
-    padding-right: calc(12px + env(safe-area-inset-right));
-  }
+/* Slight breathing room without resizing board */
+.app {
+  padding: 10px;
+}
 
+/* Landscape mobile adjustments */
+@media (max-width: 900px) and (orientation: landscape) {
   .app {
-    /* Slight global shrink instead of reflow */
-    transform: scale(0.94);
-    transform-origin: top center;
+    padding-top: 14px;
+    padding-bottom: 14px;
   }
+}
 
-  .board-wrapper {
-    /* Ensure board never touches system UI */
-    max-height: calc(100vh - 40px);
-  }
+/* Ensure control panel never sticks to top */
+.control-column {
+  margin-top: 8px;
+}
 
-  .control-column {
-    /* Keep control panel visible without scrolling */
-    max-height: calc(100vh - 40px);
-    overflow-y: auto;
+/* Lock portrait mode layout (visual hint only) */
+@media (orientation: portrait) {
+  body::before {
+    content: "🔄 Rotate device to landscape to play";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    text-align: center;
+    padding: 20px;
   }
 }
