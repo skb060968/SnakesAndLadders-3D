@@ -514,34 +514,6 @@ Control column (right)
   display: none !important;
 }
 
-/* Optional: portrait fallback (stacked) 
-@media (max-width: 900px) and (orientation: portrait) {
-  body {
-    padding: 8px;
-  }
-  .app {
-    flex-direction: column;
-    height: 100dvh;
-    overflow-y: auto;
-  }
-  .board-column {
-    flex: 0 0 auto;
-    max-width: 100%;
-  }
-  .board-wrapper {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1 / 1;
-  }
-  .control-column {
-    flex: 1 1 auto;
-    max-width: 100%;
-    height: auto;
-    margin-left: 0;
-    margin-top: 6px;
-  }
-}*/
-
 
 @media (max-width: 900px) {
 
@@ -564,5 +536,39 @@ Control column (right)
   .message {
     margin-top: 4px;
     margin-bottom: 12px;  /* more space before buttons */
+  }
+}
+
+/* =====================================================
+   MOBILE LANDSCAPE SAFETY PATCH
+   Prevent board hiding behind system UI
+   ===================================================== */
+
+/* Apply only on mobile landscape */
+@media (orientation: landscape) and (max-width: 900px) {
+
+  body {
+    /* Respect phone status bars / notches */
+    padding-top: calc(12px + env(safe-area-inset-top));
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    padding-left: calc(12px + env(safe-area-inset-left));
+    padding-right: calc(12px + env(safe-area-inset-right));
+  }
+
+  .app {
+    /* Slight global shrink instead of reflow */
+    transform: scale(0.94);
+    transform-origin: top center;
+  }
+
+  .board-wrapper {
+    /* Ensure board never touches system UI */
+    max-height: calc(100vh - 40px);
+  }
+
+  .control-column {
+    /* Keep control panel visible without scrolling */
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
   }
 }
