@@ -63,21 +63,7 @@ Board column (left)
   background: #fff;
 }
 
-/* Wooden frame around board */
-.board-wrapper::before {
-  content: "";
-  position: absolute;
-  top: -8%;
-  left: -8%;
-  right: -8%;
-  bottom: -8%;
-  background-image: url("images/frame-wood.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  z-index: 0;
-  pointer-events: none;
-}
+
 
 /* board image */
 .board-img {
@@ -540,52 +526,23 @@ Control column (right)
   }
 }
 
-/* =========================================
-   SAFE VIEWPORT PADDING (NO TOKEN BREAKAGE)
-   ========================================= */
+/* =========================
+   MOBILE & PWA SAFE VIEWPORT
+   ========================= */
 
-/* Prevent OS UI overlap (notch / status bar) */
-body {
-  padding:
-    env(safe-area-inset-top)
-    env(safe-area-inset-right)
-    env(safe-area-inset-bottom)
-    env(safe-area-inset-left);
-}
-
-/* Slight breathing room without resizing board */
+/* Use safe viewport height (avoids notch / status bar overlap) */
 .app {
-  padding: 10px;
+  max-height: 100svh;
 }
 
-/* Landscape mobile adjustments */
-@media (max-width: 900px) and (orientation: landscape) {
-  .app {
-    padding-top: 14px;
-    padding-bottom: 14px;
-  }
+/* Board wrapper: never touch screen edges */
+.board-wrapper {
+  margin-top: 12px;
+  margin-bottom: 12px;
 }
 
-/* Ensure control panel never sticks to top */
+/* Control panel spacing */
 .control-column {
-  margin-top: 8px;
-}
-
-/* Lock portrait mode layout (visual hint only) */
-@media (orientation: portrait) {
-  body::before {
-    content: "🔄 Rotate device to landscape to play";
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.85);
-    color: #fff;
-    font-size: 1.4rem;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 99999;
-    text-align: center;
-    padding: 20px;
-  }
+  margin-top: 12px;
+  margin-bottom: 12px;
 }
