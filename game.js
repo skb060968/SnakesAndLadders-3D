@@ -25,6 +25,22 @@ const p1posEl = document.getElementById('p1-pos');
 const p2posEl = document.getElementById('p2-pos');
 const controlColumn = document.querySelector('.control-column');
 
+// Fix dice face sizing after each resize
+function updateDiceTransforms() {
+  const diceStage = document.querySelector('.dice-stage');
+  if (!diceStage) return;
+  
+  const size = diceStage.offsetWidth;  // actual rendered size
+  const half = size / 2 + 0.6;
+  
+  document.documentElement.style.setProperty('--dice-half', `${half}px`);
+}
+
+// Call on init and resize
+window.addEventListener('resize', updateDiceTransforms);
+requestAnimationFrame(updateDiceTransforms);
+
+
 let positions = { 1: 1, 2: 1 };
 let currentPlayer = 1;
 let isAnimating = false;
