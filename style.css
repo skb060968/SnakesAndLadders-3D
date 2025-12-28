@@ -598,28 +598,29 @@ body {
   display: none !important;
 }
 
-/* Phone portrait: stacked, no scroll (primary mobile layout) */
+/* Phone portrait: bigger board, compact panel, no scroll */
 @media (max-width: 900px) and (orientation: portrait) {
   body {
     padding: 8px;
     padding-bottom: env(safe-area-inset-bottom);
     align-items: flex-start;
-    overflow: hidden;       /* no page scroll */
+    overflow: hidden;          /* no page scroll */
   }
 
   .app {
     flex-direction: column;
     align-items: center;
-    max-width: 100%;
     width: 100%;
+    max-width: 100%;
     height: 100vh;
     max-height: 100vh;
     overflow: hidden;
   }
 
+  /* Board uses most of the width */
   .board-column {
     width: 100%;
-    max-width: 480px;
+    max-width: 520px;
     flex: 0 0 auto;
     margin-bottom: 6px;
   }
@@ -631,12 +632,13 @@ body {
     height: auto;
   }
 
+  /* Control panel fills remaining height under board */
   .control-column {
-    max-width: 480px;
+    max-width: 520px;
     width: 100%;
     flex: 1 1 auto;
+    max-height: calc(100vh - 8px - min(100vw, 520px));
     height: auto;
-    max-height: calc(100vh - 8px - min(100vw, 480px)); /* remaining height */
     overflow: hidden;
     padding: 10px 12px;
     gap: 8px;
@@ -652,8 +654,8 @@ body {
   }
 
   .dice-stage {
-    width: 72px;
-    height: 72px;
+    width: 70px;
+    height: 70px;
   }
 
   .controls-row,
