@@ -1,112 +1,155 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
-    />
-    <title>Snakes & Ladders – Mobile</title>
+<head>
+  <meta charset="UTF-8" />
+  <title>Snakes &amp; Ladders 3D</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta
+    name="description"
+    content="Snakes &amp; Ladders 3D – fast, modern board game with 3D dice and offline PWA support."
+  />
+  <meta name="theme-color" content="#667eea" />
 
-    <!-- Mobile-specific stylesheet -->
-    <link rel="stylesheet" href="style.css" />
-    <link rel="manifest" href="manifest.json" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
 
-    <!-- Confetti (same as desktop) -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
-  </head>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Main board area -->
+    <main class="board-column" aria-label="Snakes and Ladders board">
+      <div id="board-wrapper" class="board-wrapper">
+        <img
+          id="board-img"
+          class="board-img"
+          src="images/board.png"
+          alt="Snakes and Ladders board"
+        />
+        <div id="grid" class="grid" aria-hidden="true"></div>
 
-  <body>
-    <main class="app">
-      <!-- LEFT: BOARD -->
-      <section class="board-column">
-        <div id="board-wrapper" class="board-wrapper" aria-label="Game board">
-          <img
-            id="board-img"
-            class="board-img"
-            src="images/board.png"
-            alt="Board image"
-          />
+        <!-- Tokens -->
+        <div
+          id="token1"
+          class="token token1"
+          aria-label="Player 1 token"
+        ></div>
+        <div
+          id="token2"
+          class="token token2"
+          aria-label="Player 2 or AI token"
+        ></div>
+      </div>
+    </main>
 
-          <div id="grid" class="grid"></div>
+    <!-- Control panel -->
+    <aside class="control-column" aria-label="Game controls and status">
+      <header class="title">
+        Snakes &amp; Ladders 3D
+        <div id="turn" class="turn">Player 1's Turn</div>
+      </header>
 
-          <div id="token1" class="token token1"></div>
-          <div id="token2" class="token token2"></div>
+      <!-- Mode toggle -->
+      <div class="mode-toggle modern" aria-label="Game mode">
+        <button
+          id="mode-2p"
+          class="mode-btn active"
+          type="button"
+          aria-pressed="true"
+        >
+          2 Players
+        </button>
+        <button
+          id="mode-ai"
+          class="mode-btn"
+          type="button"
+          aria-pressed="false"
+        >
+          vs AI
+        </button>
+      </div>
+
+      <!-- Dice panel -->
+      <section class="dice-panel" aria-label="3D dice">
+        <div class="dice-stage">
+          <div
+            id="dice-cube"
+            class="dice-cube"
+            role="img"
+            aria-label="Dice showing last rolled value"
+          >
+            <div class="die-face face1"></div>
+            <div class="die-face face2"></div>
+            <div class="die-face face3"></div>
+            <div class="die-face face4"></div>
+            <div class="die-face face5"></div>
+            <div class="die-face face6"></div>
+          </div>
         </div>
       </section>
 
-      <!-- RIGHT: COMPACT CONTROL PANEL -->
-      <aside class="control-column">
-        <header class="panel-header">
-          <h1 class="title">Snakes &amp; Ladders</h1>
-          <div id="turn" class="turn">Player 1's Turn</div>
-        </header>
+      <!-- Roll button directly under dice -->
+      <section class="controls-row">
+        <button
+          id="roll-btn"
+          class="btn primary"
+          type="button"
+          aria-label="Roll the dice"
+        >
+          Roll Dice
+        </button>
+      </section>
 
-        <!-- MODE TOGGLE -->
-        <div class="mode-toggle modern" role="group" aria-label="Game Mode">
-          <button
-            id="mode-2p"
-            class="mode-btn active"
-            type="button"
-            aria-pressed="true"
-          >
-            2P
-          </button>
-          <button
-            id="mode-ai"
-            class="mode-btn"
-            type="button"
-            aria-pressed="false"
-          >
-            Vs AI
-          </button>
-        </div>
-
-        <!-- DICE -->
-        <div class="dice-panel">
-          <div class="dice-stage">
-            <div id="dice-cube" class="dice-cube">
-              <div class="die-face face1"></div>
-              <div class="die-face face2"></div>
-              <div class="die-face face3"></div>
-              <div class="die-face face4"></div>
-              <div class="die-face face5"></div>
-              <div class="die-face face6"></div>
-            </div>
+      <!-- Status -->
+      <section class="status-row" aria-label="Positions and messages">
+        <div class="positions">
+          <div class="player-row">
+            <span id="p1-label">🔴 P1:</span>
+            <span id="p1-pos">1</span>
           </div>
-        </div>
-
-        <!-- CONTROLS -->
-        <div class="controls-row">
-          <button id="roll-btn" class="btn primary">ROLL</button>
-        </div>
-
-        <!-- STATUS -->
-        <div class="status-row">
-          <div class="positions">
-            🔴 P1: <strong id="p1-pos">1</strong>
-          </div>
-          <div class="positions">
+          <div class="player-row">
             <span id="p2-label">🟢 P2:</span>
-            <strong id="p2-pos">1</strong>
+            <span id="p2-pos">1</span>
           </div>
-          <div id="message" class="message">Ready</div>
         </div>
+        <p
+          id="message"
+          class="message"
+          role="status"
+          aria-live="polite"
+        >
+          Ready
+        </p>
+      </section>
 
-        <!-- RESET -->
-        <div class="bottom-row">
-          <button id="reset-btn" class="btn secondary">New</button>
-        </div>
-      </aside>
-    </main>
+      <!-- New Game button at bottom -->
+      <section class="bottom-row">
+        <button
+          id="reset-btn"
+          class="btn secondary"
+          type="button"
+          aria-label="Start a new game"
+        >
+          New Game
+        </button>
+      </section>
+    </aside>
+  </div>
 
-    <!-- Update toast for new versions -->
-    <div id="update-toast" class="update-toast" hidden>
-      <span>New version available</span>
-      <button id="update-refresh-btn" type="button">Update</button>
-    </div>
+  <!-- Update toast -->
+  <div id="update-toast" class="update-toast" hidden>
+    <span>A new version is available.</span>
+    <button id="update-refresh-btn" type="button">
+      Update
+    </button>
+  </div>
 
-    <!-- Reuse existing game logic and SW -->
-    <script src="game.js"></script>
-  </body>
+  <!-- Confetti library (for win animation) -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Game logic -->
+  <script src="game.js" defer></script>
+</body>
 </html>
