@@ -533,10 +533,12 @@ body {
 }
 
 .status-row .player-row {
-  display: flex;
-  gap: 6px;
-  align-items: center;
+  display: inline-flex;       /* inline-flex prevents wrapping */
+  gap: 2px;                   /* tighter gap */
+  white-space: nowrap;        /* force single line */
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
 }
+
 
 .message {
   margin-top: 2px;
