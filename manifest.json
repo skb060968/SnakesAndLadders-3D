@@ -3,6 +3,7 @@
   "short_name": "S&L 3D",
   "start_url": "./index.html",
   "display": "standalone",
+  "orientation": "portrait",
   "scope": "./",
   "theme_color": "#667eea",
   "background_color": "#ffffff",

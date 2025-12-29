@@ -1,13 +1,16 @@
-/* ==============================
-   Snakes & Ladders – FINAL CSS
-   Mobile Portrait + Desktop Landscape
-============================== */
+/* =========================================================
+   SNAKES & LADDERS – FINAL LOCKED STYLE
+   Mobile Portrait First + Desktop Landscape
+========================================================= */
 
-/* ---------- Reset ---------- */
+/* -----------------------------
+   Reset & Base
+----------------------------- */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  -webkit-tap-highlight-color: transparent; /* 🔑 remove blue tap box */
 }
 
 html, body {
@@ -23,181 +26,192 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
-/* ---------- App Container ---------- */
+/* -----------------------------
+   App Root
+----------------------------- */
 .app {
-  width: 100%;
-  max-width: 100vw;
-  height: 100svh;                /* safe viewport */
   display: flex;
-  flex-direction: column;        /* portrait first */
+  flex-direction: column; /* portrait default */
   align-items: center;
   justify-content: center;
+  width: 100vw;
+  height: 100svh; /* safe viewport */
   gap: 12px;
   padding: 8px;
 }
 
-/* =====================================================
-   BOARD BLOCK (square, includes frame + board)
-===================================================== */
+/* =========================================================
+   BOARD
+========================================================= */
+
 .board-column {
-  width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
+/* Board wrapper (square + frame) */
 .board-wrapper {
   position: relative;
-  width: min(92vw, 380px);
-  aspect-ratio: 1 / 1;           /* perfect square */
-  border-radius: 14px;
-  overflow: hidden;
-  background: transparent;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+  width: min(92vw, 420px);
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  overflow: visible;
 }
 
-/* Board image (with frame baked in image) */
+/* Wooden frame */
+.board-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: -8%;
+  background-image: url("images/frame-wood.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Board image */
 .board-img {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  inset: 6%;
+  width: 88%;
+  height: 88%;
   object-fit: contain;
   z-index: 1;
 }
 
-/* Grid overlay – EXACT board area */
+/* Grid overlay */
 .grid {
   position: absolute;
-  inset: 0;
+  inset: 6%;
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
-  padding: 6px;                  /* matches JS math */
-  gap: 0;
   z-index: 2;
 }
 
 /* Tokens */
 .token {
   position: absolute;
-  width: 6%;
-  height: 6%;
-  max-width: 26px;
-  max-height: 26px;
+  width: 6.5%;
+  height: 6.5%;
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  z-index: 6;
+  z-index: 5;
   background-size: cover;
   background-position: center;
   transition:
     left 260ms cubic-bezier(0.2, 0.9, 0.2, 1),
     top 260ms cubic-bezier(0.2, 0.9, 0.2, 1);
   box-shadow:
-    0 4px 8px rgba(0,0,0,0.45),
-    inset 0 0 4px rgba(255,255,255,0.25);
+    0 4px 8px rgba(0,0,0,0.4),
+    inset 0 0 4px rgba(255,255,255,0.2);
 }
 
 .token1 { background-image: url("images/red.png"); }
 .token2 { background-image: url("images/green.png"); }
 
-/* ---------- Token Animations ---------- */
-@keyframes token-jump {
+/* =========================================================
+   TOKEN ANIMATIONS (FULLY RESTORED)
+========================================================= */
+
+@keyframes token-slide {
   0% { transform: translate(-50%, -50%) scale(1); }
-  40% { transform: translate(-50%, -65%) scale(1.15); }
+  40% { transform: translate(-50%, -56%) scale(1.05); }
   100% { transform: translate(-50%, -50%) scale(1); }
+}
+.token.slide { animation: token-slide 0.35s ease; }
+
+@keyframes token-jump {
+  0% { transform: translate(-50%, -50%); }
+  50% { transform: translate(-50%, -70%) scale(1.15); }
+  100% { transform: translate(-50%, -50%); }
 }
 .token.jump { animation: token-jump 0.6s ease; }
 
 @keyframes token-pulse {
   0% { transform: translate(-50%, -50%) scale(1); }
-  50% { transform: translate(-50%, -50%) scale(1.12); }
+  50% { transform: translate(-50%, -50%) scale(1.15); }
   100% { transform: translate(-50%, -50%) scale(1); }
 }
 .token-active {
   animation: token-pulse 1.1s infinite;
-  box-shadow: 0 0 18px rgba(255,255,255,0.95);
+  box-shadow: 0 0 18px rgba(255,255,255,0.9);
 }
 
-/* =====================================================
-   CONTROL PANEL (same visual width as board)
-===================================================== */
+/* =========================================================
+   CONTROL PANEL
+========================================================= */
+
 .control-column {
-  width: min(92vw, 380px);
-  background: rgba(20, 10, 0, 0.55);
-  backdrop-filter: blur(4px);
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.18);
-  padding: 12px 10px;
+  width: min(92vw, 420px);
+  background: rgba(20,10,0,0.55);
+  backdrop-filter: blur(6px);
+  border-radius: 16px;
+  padding: 14px 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   color: #fff;
 }
 
 /* Header */
 .panel-header {
   text-align: center;
+  width: 100%;
 }
 .title {
   font-size: 1.1rem;
-  font-family: "Georgia", serif;
+  font-family: Georgia, serif;
 }
 .turn {
-  font-size: 0.95rem;
-  font-weight: 700;
+  margin-top: 6px;
+  font-size: 1rem;
+  font-weight: 800;
+  text-align: center; /* 🔑 fixed */
 }
 
-/* ---------- Mode Buttons ---------- */
+/* Mode buttons */
 .mode-toggle {
   display: flex;
   width: 100%;
-  gap: 8px;
+  gap: 10px;
 }
-
 .mode-btn {
   flex: 1;
-  padding: 8px 10px;
-  border-radius: 10px;
+  padding: 10px;
+  border-radius: 12px;
   font-weight: 800;
-  font-size: 0.85rem;
+  border: none;
   cursor: pointer;
   color: #fff;
-  border: none;
   background: linear-gradient(180deg,#6b4a2b,#4b2a12);
-  box-shadow:
-    0 4px 0 #3a1f0d,
-    0 6px 14px rgba(0,0,0,0.35);
-  transition: transform .12s ease, box-shadow .12s ease;
+  box-shadow: 0 4px 0 #3a1f0d;
+  transition: transform 0.12s ease;
 }
 .mode-btn:active {
   transform: translateY(2px);
-  box-shadow:
-    0 2px 0 #3a1f0d,
-    0 3px 6px rgba(0,0,0,0.25);
 }
-#mode-2p.active {
-  background: linear-gradient(180deg,#2b6ef6,#1e4fbf);
-}
-#mode-ai.active {
+.mode-btn.active {
   background: linear-gradient(180deg,#2ecc71,#1e9e55);
 }
 
-/* =====================================================
-   DICE (RESTORED & FIXED)
-===================================================== */
+/* Dice */
 .dice-panel {
-  margin: 6px 0;
+  display: flex;
+  justify-content: center;
 }
-
 .dice-stage {
-  width: 72px;
-  height: 72px;
+  width: 70px;
+  height: 70px;
   perspective: 900px;
 }
-
 .dice-cube {
   width: 100%;
   height: 100%;
@@ -205,16 +219,13 @@ body {
   transform-style: preserve-3d;
   transition: transform 900ms cubic-bezier(0.2,0.9,0.2,1);
 }
-
 .die-face {
   position: absolute;
   width: 100%;
   height: 100%;
-  backface-visibility: hidden;
   background-size: cover;
-  background-position: center;
+  backface-visibility: hidden;
 }
-
 .face1 { background-image: url("images/die-1.png"); }
 .face2 { background-image: url("images/die-2.png"); }
 .face3 { background-image: url("images/die-3.png"); }
@@ -222,69 +233,67 @@ body {
 .face5 { background-image: url("images/die-5.png"); }
 .face6 { background-image: url("images/die-6.png"); }
 
-.die-face:nth-child(1) { transform: rotateY(0deg) translateZ(36px); }
-.die-face:nth-child(2) { transform: rotateY(90deg) translateZ(36px); }
-.die-face:nth-child(3) { transform: rotateY(180deg) translateZ(36px); }
-.die-face:nth-child(4) { transform: rotateY(-90deg) translateZ(36px); }
-.die-face:nth-child(5) { transform: rotateX(90deg) translateZ(36px); }
-.die-face:nth-child(6) { transform: rotateX(-90deg) translateZ(36px); }
-
-/* ---------- Buttons ---------- */
+/* Buttons */
 .controls-row,
 .bottom-row {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   align-items: center;
 }
 
 .btn {
   width: 100%;
-  max-width: 170px;
-  padding: 8px 12px;
-  border-radius: 12px;
+  max-width: 200px;
+  padding: 10px;
+  border-radius: 14px;
   font-weight: 800;
-  font-size: 0.9rem;
-  cursor: pointer;
   border: none;
-  transition: transform .12s ease, box-shadow .12s ease;
+  cursor: pointer;
+  transition: transform 0.12s ease;
 }
-
+.btn:active {
+  transform: translateY(2px);
+}
 .btn.primary {
   background: linear-gradient(180deg,#8b4513,#5c3317);
   color: #fff;
-  box-shadow:
-    0 4px 0 #4b2a12,
-    0 6px 12px rgba(0,0,0,0.35);
 }
-.btn.primary:active {
-  transform: translateY(2px);
-  box-shadow:
-    0 2px 0 #4b2a12,
-    0 3px 6px rgba(0,0,0,0.25);
-}
-
 .btn.secondary {
   background: linear-gradient(180deg,#fdf6e3,#f2e0b6);
   color: #5c3317;
-  box-shadow:
-    0 3px 0 #9c8a5c,
-    0 5px 10px rgba(0,0,0,0.25);
 }
 
-/* ---------- Status ---------- */
+/* Status */
 .status-row {
   text-align: center;
-  font-size: 0.9rem;
+}
+.message {
+  min-height: 24px;
 }
 
-/* =====================================================
-   DESKTOP / LANDSCAPE
-===================================================== */
-@media (min-width: 900px) {
+/* =========================================================
+   DESKTOP LANDSCAPE
+========================================================= */
+@media (min-width: 901px) {
   .app {
     flex-direction: row;
+    gap: 16px;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 900px) {
+  body::before {
+    content: "Please rotate your device to portrait mode";
+    position: fixed;
+    inset: 0;
+    background: #000;
+    color: #fff;
+    display: flex;
     align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    z-index: 99999;
   }
 }
