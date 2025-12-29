@@ -500,16 +500,19 @@ function init() {
      PANEL SYNC (DESKTOP ONLY)
   ========================= */
   function syncPanelSize() {
-    if (!controlColumn || !boardWrapper) return;
-    if (window.matchMedia('(max-width: 900px)').matches) {
-      controlColumn.style.width = '';
-      controlColumn.style.height = '';
-      return;
-    }
-    const boardRect = boardWrapper.getBoundingClientRect();
-    controlColumn.style.width = '';
-    controlColumn.style.height = `${Math.round(boardRect.height)}px`;
+  if (!controlColumn || !boardWrapper) return;
+
+  // MOBILE / TABLET → CSS controls everything
+  if (window.matchMedia('(max-width: 900px)').matches) {
+    controlColumn.style.height = '';
+    return;
   }
+
+  // DESKTOP ONLY → match board height
+  const boardRect = boardWrapper.getBoundingClientRect();
+  controlColumn.style.height = `${Math.round(boardRect.height)}px`;
+}
+
 
   syncPanelSize();
   window.addEventListener('resize', () => requestAnimationFrame(syncPanelSize));
