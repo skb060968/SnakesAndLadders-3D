@@ -1,10 +1,10 @@
 /* ==============================
    Snakes & Ladders PWA Service Worker
    - Cache-first strategy
-   - Update detection + prompt support 
-============================== */
+   - Update detection + prompt support
+   ============================== */
 
-const CACHE_NAME = "snl-3d-v27"; // ⬅️ bump on every deploy
+const CACHE_NAME = "snl-3d-v28"; // ⬅️ bump on every deploy
 
 const ASSETS = [
   "./",
@@ -34,7 +34,7 @@ const ASSETS = [
 
 /* ==============================
    Install
-============================== */
+   ============================== */
 
 self.addEventListener("install", event => {
   event.waitUntil(
@@ -46,7 +46,7 @@ self.addEventListener("install", event => {
 
 /* ==============================
    Activate
-============================== */
+   ============================== */
 
 self.addEventListener("activate", event => {
   event.waitUntil(
@@ -56,17 +56,16 @@ self.addEventListener("activate", event => {
           if (key !== CACHE_NAME) {
             return caches.delete(key);
           }
+          return undefined;
         })
       )
-    )
+    ).then(() => self.clients.claim())
   );
-  // Take control of all clients
-  self.clients.claim();
 });
 
 /* ==============================
    Fetch (cache-first)
-============================== */
+   ============================== */
 
 self.addEventListener("fetch", event => {
   event.respondWith(
@@ -81,7 +80,7 @@ self.addEventListener("fetch", event => {
 
 /* ==============================
    Listen for SKIP_WAITING message
-============================== */
+   ============================== */
 
 self.addEventListener("message", event => {
   if (event.data && event.data.type === "SKIP_WAITING") {
