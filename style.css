@@ -258,7 +258,7 @@ body {
 /* Token theme (shadow + per-player sprites) */
 .token {
   box-shadow:
-    0 4px 8px rgba(0, 0, 0, 0.4),
+    0 5px 10px rgba(0, 0, 0, 0.4),
     inset 0 0 4px rgba(255, 255, 255, 0.2);
 }
 
@@ -483,7 +483,7 @@ body {
 
 .token-active {
   animation: token-pulse 1.2s ease-in-out infinite;
-  box-shadow: 0 0 20px 15px rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 20px 10px rgba(255, 255, 255, 0.85);
 }
 
 /* Penalty glow on third six */
@@ -507,4 +507,7 @@ body {
 
 .token.penalty {
   animation: token-penalty-glow 1.2s ease-in-out;
+   box-shadow:
+    0 0 26px 10px rgba(255, 0, 0, 0.95);    /* intense red glow */
+  
 }
