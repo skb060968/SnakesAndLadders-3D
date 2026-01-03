@@ -54,8 +54,8 @@ let consecutiveSixes = { 1: 0, 2: 0 };
 let turnTotal = { 1: 0, 2: 0 };
 
 // snakes & ladders
-const snakes = { 96: 87, 89: 67, 80: 58, 70: 49, 45: 26, 23: 5 };
-const ladders = { 8: 32, 20: 42, 47: 68, 56: 75, 69: 90, 78: 97 };
+const snakes = { 99: 84, 95: 74, 89: 73, 66: 57, 63: 59, 38: 25, 32: 30, 20: 18 };
+const ladders = { 5: 26, 21: 59, 28: 47, 49: 68, 64: 85 };
 
 // AUDIO
 const sounds = {
@@ -420,7 +420,18 @@ function computerMove() {
 function highlightCurrentPlayer() {
   token1.classList.toggle('token-active', currentPlayer === 1);
   token2.classList.toggle('token-active', currentPlayer === 2);
+  
+  // Sync roll button color with active player
+  if (!rollBtn) return;
+  rollBtn.classList.remove('p1-turn', 'p2-turn');
+  if (currentPlayer === 1) {
+    rollBtn.classList.add('p1-turn');
+  } else {
+    rollBtn.classList.add('p2-turn');
+  }
+     
 }
+
 
 // Player2 AI in vs mode
 function playerName(n) {

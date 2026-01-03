@@ -1,12 +1,13 @@
 {
   "name": "Snakes & Ladders 3D",
   "short_name": "S&L 3D",
-  "start_url": "./index.html",
+  "start_url": "/SnakesAndLadders/index.html",
+  "scope": "/SnakesAndLadders/",
   "display": "standalone",
   "orientation": "portrait",
-  "scope": "./",
   "theme_color": "#667eea",
   "background_color": "#ffffff",
+  "description": "Classic Snakes & Ladders reimagined as a fast 3D web game. Enjoy smooth 3D dice, step-by-step animations, fair six-roll rules, offline support, and quick matches against friends or AI.",
   "icons": [
     {
       "src": "icons/icon-192.png",
@@ -16,6 +17,18 @@
     {
       "src": "icons/icon-512.png",
       "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "images/1.png",
+      "sizes": "1280x688",
+      "type": "image/png"
+    },
+    {
+      "src": "images/2.png",
+      "sizes": "1280x688",
       "type": "image/png"
     }
   ],

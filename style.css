@@ -355,6 +355,17 @@ body {
     0 6px 12px rgba(0, 0, 0, 0.35);
 }
 
+/* Player 1 (red token) */
+.btn.primary.p1-turn {
+  background: linear-gradient(180deg, #c92a2a, #7f1d1d);
+}
+
+/* Player 2 (green / AI token) */
+.btn.primary.p2-turn {
+  background: linear-gradient(180deg, #2f9e44, #18632a);
+}
+
+
 .btn.primary:active {
   transform: translateY(2px);
   box-shadow:

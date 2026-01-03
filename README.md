@@ -1,11 +1,27 @@
-# Snakes & Ladders 3D — PWA
+# Snakes & Ladders 3D (PWA)
 
-This repo contains a small Snakes & Ladders 3D web game with PWA support.
+A fast, modern Snakes & Ladders game built as a Progressive Web App (PWA), featuring smooth 3D dice, smart six-roll rules, and offline play against friends or AI.
 
-## PWA checklist
+## Features
 
-- `manifest.json` is present with `name`, `short_name`, `start_url`, `display`, `theme_color`, and `icons` (192/512).
-- `sw.js` is registered in `game.js` and caches core assets.
-- Icons are in `icons/` and referenced in `manifest.json` and `index.html`.
-- Service worker file is at site root so its scope covers the app.
+- 3D dice cube with realistic roll animation
+- Classic 2‑player mode and vs AI mode
+- Fair six‑roll rules with third‑six penalty
+- Animated snakes and ladders movement
+- Offline support via service worker
+- Mobile‑first portrait layout with desktop landscape support
 
+## Tech Stack
+
+- HTML5, CSS3, JavaScript
+- PWA: `manifest.json`, `sw.js` cache‑first strategy
+- Works on modern browsers and installable as an app
+
+## Development
+
+- Main entry: `index.html`
+- Styles: `style.css`
+- Game logic: `game.js`
+- PWA config: `manifest.json`, `sw.js`
+
+Update `CACHE_NAME` in `sw.js` when deploying a new version.
